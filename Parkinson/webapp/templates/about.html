@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="About the Parkinson's Disease MRI Detection System"
+    />
+    <title>About | Parkinson's Disease Detection</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">
+          <div class="logo-icon">🧠</div>
+          <div class="logo-text">
+            <h1>Parkinson's Disease Detection</h1>
+            <p>AI-Powered MRI Analysis System</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('about') }}" class="nav-link active">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <section class="about-section">
+          <!-- Project Overview -->
+          <div class="about-card">
+            <h2>About This Project</h2>
+            <p>
+              This is an AI-powered diagnostic assistance system that analyzes
+              brain MRI scans to detect patterns associated with Parkinson's
+              Disease. Developed as a final-year academic project, it
+              demonstrates the application of deep learning in medical imaging.
+            </p>
+          </div>
+
+          <!-- How It Works -->
+          <div class="about-card">
+            <h2>How It Works</h2>
+            <div class="process-steps">
+              <div class="process-step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                  <h4>Image Upload</h4>
+                  <p>User uploads a brain MRI scan through the web interface</p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                  <h4>Preprocessing</h4>
+                  <p>
+                    Image is resized to 224×224 pixels and normalized for CNN
+                    input
+                  </p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                  <h4>CNN Analysis</h4>
+                  <p>
+                    Convolutional Neural Network extracts features and
+                    classifies the image
+                  </p>
+                </div>
+              </div>
+              <div class="process-step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <h4>Result Display</h4>
+                  <p>
+                    Prediction (Healthy/Parkinson) with confidence score is
+                    displayed
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CNN Architecture -->
+          <div class="about-card">
+            <h2>CNN Model Architecture</h2>
+            <p>
+              Our model uses a custom Convolutional Neural Network designed for
+              MRI analysis:
+            </p>
+            <div class="architecture-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Layer</th>
+                    <th>Configuration</th>
+                    <th>Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Input</td>
+                    <td>224 × 224 × 3</td>
+                    <td>Accepts preprocessed MRI images</td>
+                  </tr>
+                  <tr>
+                    <td>Conv Block 1</td>
+                    <td>32 filters, 3×3</td>
+                    <td>Detects basic patterns (edges, gradients)</td>
+                  </tr>
+                  <tr>
+                    <td>Conv Block 2</td>
+                    <td>64 filters, 3×3</td>
+                    <td>Learns intermediate features</td>
+                  </tr>
+                  <tr>
+                    <td>Conv Block 3</td>
+                    <td>128 filters, 3×3</td>
+                    <td>Captures structural patterns</td>
+                  </tr>
+                  <tr>
+                    <td>Conv Block 4</td>
+                    <td>256 filters, 3×3</td>
+                    <td>Maximum feature abstraction</td>
+                  </tr>
+                  <tr>
+                    <td>Dense</td>
+                    <td>256 units, ReLU</td>
+                    <td>Feature combination</td>
+                  </tr>
+                  <tr>
+                    <td>Dropout</td>
+                    <td>50%</td>
+                    <td>Prevents overfitting</td>
+                  </tr>
+                  <tr>
+                    <td>Output</td>
+                    <td>1 unit, Sigmoid</td>
+                    <td>Binary classification probability</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Technologies Used -->
+          <div class="about-card">
+            <h2>Technologies Used</h2>
+            <div class="tech-grid">
+              <div class="tech-item">
+                <span class="tech-icon">🐍</span>
+                <span class="tech-name">Python</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-icon">🧠</span>
+                <span class="tech-name">TensorFlow</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-icon">🌐</span>
+                <span class="tech-name">Flask</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-icon">📊</span>
+                <span class="tech-name">NumPy</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-icon">🖼️</span>
+                <span class="tech-name">Pillow</span>
+              </div>
+              <div class="tech-item">
+                <span class="tech-icon">📈</span>
+                <span class="tech-name">Scikit-learn</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic Information -->
+          <div class="about-card">
+            <h2>Academic Information</h2>
+            <p>
+              This project demonstrates the following concepts for academic
+              evaluation:
+            </p>
+            <ul class="academic-list">
+              <li>
+                <strong>Deep Learning:</strong> CNN architecture design and
+                implementation
+              </li>
+              <li>
+                <strong>Medical Image Analysis:</strong> MRI preprocessing and
+                feature extraction
+              </li>
+              <li>
+                <strong>Binary Classification:</strong> Supervised learning for
+                disease detection
+              </li>
+              <li>
+                <strong>Data Handling:</strong> Class imbalance handling and
+                data augmentation
+              </li>
+              <li>
+                <strong>Web Development:</strong> Flask-based user interface
+              </li>
+              <li>
+                <strong>Model Evaluation:</strong> Metrics interpretation and
+                visualization
+              </li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="disclaimer">
+          <p>
+            <strong>⚠️ Medical Disclaimer:</strong> This is an AI-based
+            educational tool for research purposes only. It should NOT be used
+            for medical diagnosis.
+          </p>
+        </div>
+        <div class="footer-info">
+          <p>
+            Developed for Final Year Academic Project | CNN-Based Medical Image
+            Analysis
+          </p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

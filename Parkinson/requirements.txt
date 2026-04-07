@@ -1,0 +1,19 @@
+# Parkinson's Disease MRI Detection - Requirements
+# For educational/research purposes only
+
+# Core ML Libraries
+tensorflow>=2.10.0
+numpy>=1.21.0
+pillow>=9.0.0
+
+# Data Handling & Visualization
+matplotlib>=3.5.0
+scikit-learn>=1.0.0
+seaborn>=0.12.0
+
+# Web Framework
+flask>=2.2.0
+werkzeug>=2.2.0
+
+# Optional: For model interpretability
+# opencv-python>=4.6.0

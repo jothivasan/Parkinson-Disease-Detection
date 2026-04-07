@@ -1,0 +1,54 @@
+# Parkinson's Disease MRI Detection Project
+# .gitignore - Files and directories to exclude from version control
+
+# ======================
+# Python Cache
+# ======================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# ======================
+# Virtual Environment
+# ======================
+.venv/
+venv/
+ENV/
+env/
+
+# ======================
+# IDE Settings
+# ======================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ======================
+# OS Files
+# ======================
+.DS_Store
+Thumbs.db
+
+# ======================
+# Uploaded Files (User uploads during testing)
+# ======================
+webapp/static/uploads/*
+!webapp/static/uploads/.gitkeep
+
+# ======================
+# Logs and Temp Files
+# ======================
+*.log
+*.tmp
+
+# ======================
+# NOTE: The following are KEPT in version control
+# ======================
+# models/                - Trained models (included for demo)
+# logs/                  - Training visualizations (included for report)
+# parkinsons_dataset/    - Dataset (should be documented separately)
+
+*.keras

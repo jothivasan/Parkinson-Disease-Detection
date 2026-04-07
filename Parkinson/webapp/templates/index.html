@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AI-powered Parkinson's Disease Detection from Brain MRI Scans - Educational Research Tool"
+    />
+    <title>Parkinson's Disease MRI Detection | AI Diagnostic Tool</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css', v='2') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">
+          <div class="logo-icon">🧠</div>
+          <div class="logo-text">
+            <h1>Parkinson's Disease Detection</h1>
+            <p>AI-Powered MRI Analysis System</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="{{ url_for('index') }}" class="nav-link active">Home</a>
+          <a href="{{ url_for('about') }}" class="nav-link">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+          <div class="hero-content">
+            <h2>MRI-Based Parkinson's Detection</h2>
+            <p>
+              Upload a brain MRI scan to analyze using our deep learning CNN
+              model. Get instant predictions with confidence scores.
+            </p>
+          </div>
+        </section>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %} {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <span class="alert-icon">
+            {% if category == 'error' %}❌{% else %}ℹ️{% endif %}
+          </span>
+          <span class="alert-message">{{ message }}</span>
+          <button class="alert-close" onclick="this.parentElement.remove()">
+            ×
+          </button>
+        </div>
+        {% endfor %} {% endif %} {% endwith %}
+
+        <!-- Upload Section -->
+        <section class="upload-section">
+          <div class="upload-card">
+            <div class="upload-header">
+              <h3>Upload MRI Scan</h3>
+              <p>Supported formats: PNG, JPG, JPEG, GIF, BMP</p>
+            </div>
+
+            <form
+              action="{{ url_for('predict') }}"
+              method="POST"
+              enctype="multipart/form-data"
+              id="upload-form"
+            >
+              <label class="upload-area" id="upload-area" for="file-input">
+                <div class="upload-icon">📤</div>
+                <div class="upload-text">
+                  <p class="upload-primary">Drag & Drop your MRI image here</p>
+                  <p class="upload-secondary">or click to browse</p>
+                </div>
+                <input
+                  type="file"
+                  name="file"
+                  id="file-input"
+                  class="file-input-overlay"
+                  accept=".png,.jpg,.jpeg,.gif,.bmp"
+                  required
+                />
+              </label>
+
+              <button
+                type="button"
+                class="btn-secondary"
+                id="browse-btn"
+                onclick="openFilePicker()"
+              >
+                Choose File
+              </button>
+
+              <div class="file-preview" id="file-preview" style="display: none">
+                <img id="preview-image" src="" alt="MRI Preview" />
+                <div class="file-info">
+                  <span id="file-name"></span>
+                  <button
+                    type="button"
+                    class="btn-remove"
+                    onclick="removeFile()"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-primary" id="submit-btn">
+                <span class="btn-icon">🔍</span>
+                <span class="btn-text">Analyze MRI Scan</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Info Cards -->
+          <div class="info-cards">
+            <div class="info-card">
+              <div class="info-icon">🎯</div>
+              <h4>Accurate Detection</h4>
+              <p>
+                Deep learning CNN trained on brain MRI scans for pattern
+                recognition
+              </p>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">⚡</div>
+              <h4>Instant Results</h4>
+              <p>Get predictions with confidence scores in seconds</p>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">🔒</div>
+              <h4>Secure & Private</h4>
+              <p>Your medical images are processed locally and not stored</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="disclaimer">
+          <p>
+            <strong>⚠️ Medical Disclaimer:</strong> This is an AI-based
+            educational tool for research purposes only. It should NOT be used
+            for medical diagnosis. Always consult qualified healthcare
+            professionals for medical advice and diagnosis.
+          </p>
+        </div>
+        <div class="footer-info">
+          <p>
+            Developed for Final Year Academic Project | CNN-Based Medical Image
+            Analysis
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // File upload handling
+      const uploadArea = document.getElementById("upload-area");
+      const fileInput = document.getElementById("file-input");
+      const filePreview = document.getElementById("file-preview");
+      const previewImage = document.getElementById("preview-image");
+      const fileName = document.getElementById("file-name");
+      const submitBtn = document.getElementById("submit-btn");
+
+      function openFilePicker() {
+        if (typeof fileInput.showPicker === "function") {
+          fileInput.showPicker();
+          return;
+        }
+        fileInput.click();
+      }
+
+      // Drag and drop
+      uploadArea.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        uploadArea.classList.add("dragover");
+      });
+
+      uploadArea.addEventListener("dragleave", () => {
+        uploadArea.classList.remove("dragover");
+      });
+
+      uploadArea.addEventListener("drop", (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove("dragover");
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          fileInput.files = files;
+          handleFile(files[0]);
+        }
+      });
+
+      // File selection
+      fileInput.addEventListener("change", (e) => {
+        if (e.target.files.length > 0) {
+          handleFile(e.target.files[0]);
+        }
+      });
+
+      function handleFile(file) {
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+          fileName.textContent = file.name;
+          uploadArea.style.display = "none";
+          filePreview.style.display = "flex";
+          submitBtn.classList.add("active");
+        };
+        reader.readAsDataURL(file);
+      }
+
+      function removeFile() {
+        fileInput.value = "";
+        uploadArea.style.display = "flex";
+        filePreview.style.display = "none";
+        submitBtn.classList.remove("active");
+      }
+
+      // Form submission loading state
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", function () {
+          submitBtn.innerHTML =
+            '<span class="btn-icon">⏳</span><span class="btn-text">Analyzing...</span>';
+          submitBtn.disabled = true;
+        });
+    </script>
+  </body>
+</html>

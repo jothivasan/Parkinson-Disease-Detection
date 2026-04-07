@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="MRI Analysis Result - Parkinson's Disease Detection"
+    />
+    <title>Analysis Result | Parkinson's Disease Detection</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section -->
+      <header class="header">
+        <div class="logo">
+          <div class="logo-icon">🧠</div>
+          <div class="logo-text">
+            <h1>Parkinson's Disease Detection</h1>
+            <p>AI-Powered MRI Analysis System</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="{{ url_for('index') }}" class="nav-link">Home</a>
+          <a href="{{ url_for('about') }}" class="nav-link">About</a>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <section class="result-section">
+          <div class="result-card">
+            <!-- Result Header -->
+            <div class="result-header">
+              <h2>Analysis Complete</h2>
+              <p>MRI scan has been analyzed successfully</p>
+            </div>
+
+            <!-- Image Preview -->
+            <div class="result-image">
+              <img
+                src="{{ url_for('static', filename='uploads/' + image_filename) }}"
+                alt="Analyzed MRI"
+              />
+            </div>
+
+            <!-- Prediction Result -->
+            <div
+              class="result-prediction {% if prediction == 'Parkinson' %}result-parkinson{% else %}result-healthy{% endif %}"
+            >
+              <div class="prediction-icon">
+                {% if prediction == 'Parkinson' %} ⚠️ {% else %} ✓ {% endif %}
+              </div>
+              <div class="prediction-text">
+                <span class="prediction-label">Prediction:</span>
+                <span class="prediction-value">{{ prediction }}</span>
+              </div>
+            </div>
+
+            <!-- Confidence Score -->
+            <div class="confidence-section">
+              <div class="confidence-header">
+                <span>Confidence Score</span>
+                <span class="confidence-value">{{ confidence }}%</span>
+              </div>
+              <div class="confidence-bar">
+                <div
+                  class="confidence-fill {% if prediction == 'Parkinson' %}fill-parkinson{% else %}fill-healthy{% endif %}"
+                  style="width: {{ confidence }}%"
+                ></div>
+              </div>
+              <div class="confidence-info">
+                <span>Raw Probability: {{ probability }}</span>
+              </div>
+            </div>
+
+            <!-- Interpretation -->
+            <div class="interpretation">
+              <h4>Interpretation</h4>
+              {% if prediction == 'Parkinson' %}
+              <p>
+                The AI model has detected patterns in the MRI scan that are
+                <strong>associated with Parkinson's Disease</strong>. The model
+                is {{ confidence }}% confident in this assessment.
+              </p>
+              {% else %}
+              <p>
+                The AI model has detected patterns in the MRI scan that are
+                <strong>consistent with a healthy brain</strong>. The model is
+                {{ confidence }}% confident in this assessment.
+              </p>
+              {% endif %}
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="result-actions">
+              <a href="{{ url_for('index') }}" class="btn-primary">
+                <span class="btn-icon">📤</span>
+                <span class="btn-text">Analyze Another Image</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Medical Disclaimer -->
+          <div class="result-disclaimer">
+            <div class="disclaimer-icon">⚠️</div>
+            <div class="disclaimer-content">
+              <h4>Important Medical Disclaimer</h4>
+              <p>
+                This is an <strong>AI-based educational tool</strong> developed
+                for research and academic purposes. It should
+                <strong>NOT</strong> be used as a substitute for professional
+                medical diagnosis.
+              </p>
+              <ul>
+                <li>
+                  Always consult a qualified neurologist for Parkinson's Disease
+                  diagnosis
+                </li>
+                <li>
+                  Medical imaging interpretation requires trained professionals
+                </li>
+                <li>
+                  AI predictions may contain errors and should be verified
+                  clinically
+                </li>
+                <li>
+                  This tool is intended for educational demonstration only
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-info">
+          <p>
+            Developed for Final Year Academic Project | CNN-Based Medical Image
+            Analysis
+          </p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Animate confidence bar on load
+      document.addEventListener("DOMContentLoaded", function () {
+        const confidenceFill = document.querySelector(".confidence-fill");
+        const targetWidth = confidenceFill.style.width;
+        confidenceFill.style.width = "0%";
+        setTimeout(() => {
+          confidenceFill.style.width = targetWidth;
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
